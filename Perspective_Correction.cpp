@@ -17,6 +17,8 @@
 
 #include "CameraManager.h"
 
+
+
 struct Mouse_info {
 	cv::Point pt1, pt2, pt3; bool RIGHTBUTTONUP;
 	Mouse_info(){
@@ -480,7 +482,7 @@ int main(int argc, char* argv[])
 	// Initialize /dev Video devices
 	CameraManager *Manager= new CameraManager();
 	Manager->addCamera(0,V4L);
-	Manager->addCamera(1,V4L);
+//	Manager->addCamera(1,V4L);
 	//Manager->addCamera(1,UEye);
 	//Manager->addCamera(2,UEye);
 
@@ -652,6 +654,10 @@ int main(int argc, char* argv[])
 					{
 						//imshow("original 0",originalframe[0]);
 						//imshow("original 1",originalframe[1]);
+
+//						for(int i = 0; i < number_cameras; i++) {
+//							imshow("original " + i, originalframe[i]);
+//						}
 					}
 
 
@@ -810,6 +816,7 @@ int main(int argc, char* argv[])
 
 			        long int Board_ID=0;
 
+//			        namedWindow( "gray", CV_WINDOW_AUTOSIZE ); //debug
 					//Look for circles
 			        for (uint i_corner=0;i_corner<pointBuf2.size();i_corner++)
 			        {
@@ -826,18 +833,25 @@ int main(int argc, char* argv[])
 
 					    medianBlur(gray, gray, 5);
 
-					    vector<Vec3f> circles;
 
-					    HoughCircles(gray, circles, HOUGH_GRADIENT, 1, 10,
-					                 100, 30, 1, 70 // change the last two parameters
-					                                // (min_radius & max_radius) to detect larger circles
-					                 );
+//					    vector<Vec3f> circles;
+//
+//					    HoughCircles(gray, circles, HOUGH_GRADIENT, 1, 10,
+//					    		100, 30, 1, 70 // change the last two parameters
+//								// (min_radius & max_radius) to detect larger circles
+//					    );
+//					    if (circles.size()>0)
+//					    {
 
-					    if (circles.size()>0)
+					    uchar squareColor = gray.at<uchar>(5,5);//TODO find better place for color
+					    uchar centerColor = gray.at<uchar>(gray.rows/2,gray.cols/2);
+
+					    if (!(centerColor-100<=squareColor && centerColor+100>=squareColor))
+					    //the color of the center is not close to the color of the rest of the square
 					    {
-					    	Board_circle[i_corner]=true;
+					    	Board_circle[i_corner]=true; //then there is a circle there
 					    	Board_ID=Board_ID+pow(2,i_corner);
-				        	//cout << "i_corner " << i_corner <<" BoardID "<< Board_ID << endl;
+//				        	//cout << "i_corner " << i_corner <<" BoardID "<< Board_ID << endl;
 					    }
 					    else
 					    {
