@@ -39,7 +39,7 @@ bool V4LGrabber::initCamera()
 		{
 			cap0->set(cv::CAP_PROP_FRAME_WIDTH, 1280); // valueX = your wanted width
 			cap0->set(cv::CAP_PROP_FRAME_HEIGHT, 720); // valueY = your wanted heigth
-			cap0->set(cv::CAP_PROP_FPS,30);
+			cap0->set(cv::CAP_PROP_FPS,15); //lower fps if using multiple cameras
 
 			double dWidth = cap0->get(cv::CAP_PROP_FRAME_WIDTH); //get the width of frames of the video
 			double dHeight = cap0->get(cv::CAP_PROP_FRAME_HEIGHT); //get the height of frames of the video

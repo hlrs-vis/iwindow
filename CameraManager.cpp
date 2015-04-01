@@ -16,7 +16,7 @@ CameraManager::~CameraManager() {
 	// TODO Auto-generated destructor stub
 }
 
-bool CameraManager::addCamera(int device, CameraType type)
+bool CameraManager::addCamera(int device, CameraType type, string address)
 {
 	GenCamera *newCamera= new GenCamera();
 	switch (type)
@@ -31,8 +31,13 @@ bool CameraManager::addCamera(int device, CameraType type)
 			newCamera= new UEyeGrabber();
 			break;
 		}
+		case LAN:
+		{
+			newCamera = new LANGrabber();
+			break;
+		}
 	}
-
+	newCamera->setAddress(address);
 	newCamera->setDeviceNumber(device);
 	newCamera->initCamera();
 	Cameras.push_back(newCamera);

@@ -11,9 +11,6 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include <opencv2/core.hpp>
-#include <opencv2/core/utility.hpp>
-
 
 #include <opencv2/core.hpp>
 #include <opencv2/core/utility.hpp>
@@ -22,6 +19,8 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/videoio.hpp>
 #include <opencv2/highgui.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 using namespace std;
 using namespace cv;
@@ -31,6 +30,7 @@ GenCamera::GenCamera() {
 	// TODO Auto-generated constructor stub
 	get_success=false;
 	DeviceNumber=0;
+	address = "";
 }
 
 GenCamera::~GenCamera() {

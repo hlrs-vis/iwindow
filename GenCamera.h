@@ -23,7 +23,7 @@
 using namespace cv;
 using namespace std;
 
-enum CameraType {V4L, UEye};
+enum CameraType {V4L, UEye, LAN};
 
 class GenCamera {
 public:
@@ -31,6 +31,7 @@ public:
 	virtual ~GenCamera();
 
 	virtual bool setDeviceNumber(int DeviceNumber){return 0;};
+	virtual bool setAddress(string address){return 0;}
 	virtual bool initCamera(){return 0;};
 	virtual bool getFrame(){return 0;};
 	virtual bool close(){return 0;};
@@ -41,6 +42,7 @@ public:
     bool get_success;
 	int DeviceNumber;
 	CameraType type;
+	string address;
 
 
 

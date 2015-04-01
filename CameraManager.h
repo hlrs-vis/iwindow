@@ -11,7 +11,7 @@
 #include "GenCamera.h"
 #include "V4LGrabber.h"
 #include "UEyeGrabber.h"
-
+#include "LANGrabber.h"
 
 
 class CameraManager {
@@ -19,7 +19,7 @@ public:
 	CameraManager();
 	virtual ~CameraManager();
 
-	bool addCamera(int device, CameraType type);
+	bool addCamera(int device, CameraType type, string address);
 	bool capture();
 
 	vector<GenCamera*> Cameras;
