@@ -472,15 +472,6 @@ enum { READ = 0, PROCESSING=1, DETECTION = 2, DRAWING = 3, FITTING = 4,
 int main(int argc, char* argv[])
 {
 
-//	VideoCapture vcap;
-//	const string url = "http://141.58.8.56/camera/current.jpg";
-//	vcap.open(url);
-//
-//	if (!vcap.isOpened())
-//	{
-//		std::cout << "could not capture" << std::endl;
-//		return 0;
-//	}
     const Scalar RED(0,0,255), GREEN(0,255,0), BLUE(255,0,0), PURPLE(255,0,255);
 
 	//metal height;
@@ -491,10 +482,10 @@ int main(int argc, char* argv[])
 
 	// Initialize /dev Video devices
 	CameraManager *Manager= new CameraManager();
-//	Manager->addCamera(0,V4L,""); //Todo fix syntax to remove empty argument
+	Manager->addCamera(0,V4L,""); //Todo fix syntax to remove empty argument
 //	Manager->addCamera(1,V4L,"");
 //	Manager->addCamera(3,LAN,"http://141.58.8.57/camera/current.jpg");
-	Manager->addCamera(0,LAN,"http://141.58.8.56/camera/current.jpg");
+	Manager->addCamera(2,LAN,"http://141.58.8.56/camera/current.jpg");
 	//Manager->addCamera(1,UEye,"");
 	//Manager->addCamera(2,UEye,"");
 
@@ -539,18 +530,17 @@ int main(int argc, char* argv[])
 		if (dev<number_cameras)
 		{
 		//Get Distortion matrix and prepare outputfile;
-//		int dev = Manager->Cameras[i]->DeviceNumber; //ToDo Change to iterating through given device numbers instead of forcing an ordering system
 		string filenameinpre="out_camera_data_";
 		string filenamesuffix=".xml";
 		stringstream filenameindev;
-		filenameindev << filenameinpre << dev << filenamesuffix;
+		filenameindev << filenameinpre << Manager->Cameras[dev]->DeviceNumber << filenamesuffix;
 		string filenamein = filenameindev.str();								//Read Matrix created by camera_calibration
 		FileStorage fs(filenamein, FileStorage::READ);
 		cout << filenamein << " opened for reading"<< endl;
 
 		string filenameoutpre="transformation_matrix_";
 		stringstream filenameoutdev;
-		filenameoutdev << filenameoutpre << dev << filenamesuffix;
+		filenameoutdev << filenameoutpre << Manager->Cameras[dev]->DeviceNumber << filenamesuffix;
 		string filenameout = filenameoutdev.str();								//Read Matrix created by camera_calibration
 
 		fs["Camera_Matrix"] >> cameraMatrix[dev];
